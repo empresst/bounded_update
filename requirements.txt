@@ -1,0 +1,13 @@
+# Versions used for the local analysis steps (regen_eval_split, script13-19).
+# script1-3 ran on Kaggle's default Python image.
+torch>=2.0
+numpy
+polars
+pyarrow
+scipy
+scikit-learn
+transformers          # MedCPT encoders (ncbi/MedCPT-Query-Encoder, ncbi/MedCPT-Article-Encoder)
+sentence-transformers
+biopython             # NCBI E-utilities
+duckdb                # script1, check_* scripts
+matplotlib
