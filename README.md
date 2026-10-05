@@ -42,6 +42,10 @@ Steps 1–3 were run on Kaggle (GPU); the rest ran locally on CPU.
 | 11 | `script23_faithfulness.py` | `faithfulness.json` | Attribution deletion test (supplementary material, Table S5) |
 | 12 | `script8_ablation_studies.py` | `ablation_results.json` | Replay-buffer and split-ratio ablation (supplementary material; log in `provenance/ablation_output.txt`) |
 | 13 | `script27_cohort_table.py` | console | Cohort characteristics by era (supplementary material, Table S3) |
+| 14 | `plot_fig2.py` | `fig_relocation.pdf` | Figure 2, drawn from the saved results |
+| 15 | `script24_broad_corpus.py` | `pubmed_corpus_broad.json` | Broader 2009–2019 PubMed corpus (3,668 abstracts) for the grounding check |
+| 16 | `script29_grounding_fixed.py` | `grounding_fixed.json` | Patient-specific grounding of retrieved evidence (supplementary material) |
+| 17 | `script28_multiseed_extras.py` | `multiseed_extras.json` | Five-seed attribution movement and model-level separability (supplementary material, Table S4) |
 
 Label checks (independent, need raw MIMIC-IV):
 

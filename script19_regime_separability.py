@@ -98,5 +98,36 @@ out["without_septic_shock"] = dict(n=len(rb), rho_signed_diff=float(np.mean(rb) 
 print(f"\n  without septic shock (n={len(rb)}): signed rho {np.mean(rb)-np.mean(rc):+.3f}  "
       f"top-5 Jaccard {np.mean(jb)-np.mean(jc):+.3f}  retrieval Jaccard {np.mean(ret):+.3f}")
 
+# ── 4. between-stream contrast per replication seed (written by script22) ───
+rc_path = SAVE_PATH / "relocation_check.json"
+if rc_path.exists():
+    rel = json.load(open(rc_path))["relocation"]
+    phys = np.array(rel["physio_rho_signed"]["per_seed"])
+    trt = np.array(rel["treat_rho_signed"]["per_seed"])
+    did = phys - trt
+    out["between_stream_by_seed"] = dict(
+        physio_minus_treat=did.tolist(), mean=float(did.mean()), sd=float(did.std(ddof=1)),
+        physio_mean=float(phys.mean()), treat_mean=float(trt.mean()), n_positive=int((did > 0).sum()))
+    print(f"\n  between-stream contrast (signed rho, B-C physio minus B-C treat) by seed: "
+          f"{np.round(did, 3).tolist()}  mean {did.mean():+.3f} (SD {did.std(ddof=1):.3f}), "
+          f"positive in {(did > 0).sum()}/{len(did)}")
+
+# ── 5. chance baselines: expected Jaccard of two random k-subsets of n items ─
+from math import comb
+
+
+def chance_jaccard(n, k):
+    """E[|A&B| / |A|B|] for two independent uniform random k-subsets of n items."""
+    return sum(comb(k, i) * comb(n - k, k - i) / comb(n, k) * i / (2 * k - i)
+               for i in range(k + 1))
+
+
+n_corpus = len(json.load(open(SAVE_PATH / "pubmed_corpus.json"))) \
+    if (SAVE_PATH / "pubmed_corpus.json").exists() else 514
+out["chance_jaccard"] = {"attribution_top5_of_86": chance_jaccard(86, 5),
+                         "attribution_top10_of_86": chance_jaccard(86, 10),
+                         f"retrieval_top5_of_{n_corpus}": chance_jaccard(n_corpus, 5)}
+print("\n  chance Jaccard: " + "  ".join(f"{k} {v:.4f}" for k, v in out["chance_jaccard"].items()))
+
 json.dump(out, open(SAVE_PATH / "regime_separability.json", "w"), indent=2)
 print("\n  wrote regime_separability.json")

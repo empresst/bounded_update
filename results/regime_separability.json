@@ -29,5 +29,24 @@
     "rho_signed_diff": 0.05124219751081327,
     "top5_jaccard_diff": 0.1006746031746032,
     "physio_retrieval_jaccard_diff": 0.103015873015873
+  },
+  "between_stream_by_seed": {
+    "physio_minus_treat": [
+      0.17214611686731351,
+      0.11873209609132496,
+      0.15954370394366058,
+      0.12779120451945136,
+      0.15668759645798458
+    ],
+    "mean": 0.146980143575947,
+    "sd": 0.022647138180569865,
+    "physio_mean": 0.09150042020402949,
+    "treat_mean": -0.05547972337191751,
+    "n_positive": 5
+  },
+  "chance_jaccard": {
+    "attribution_top5_of_86": 0.03307146174422177,
+    "attribution_top10_of_86": 0.06459021159203908,
+    "retrieval_top5_of_514": 0.005425359048612813
   }
 }
